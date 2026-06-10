@@ -1,4 +1,4 @@
-const { add, subtract, multiply, divide } = require('../lib/calculator');
+const { add, subtract, multiply, divide, modulo, power, squareRoot } = require('../lib/calculator');
 
 describe('Calculator library', () => {
   test('addition: 2 + 3 = 5', () => {
@@ -26,5 +26,18 @@ describe('Calculator library', () => {
     expect(subtract(5.5, 2.2)).toBeCloseTo(3.3, 5);
     expect(multiply(-3, 3)).toBe(-9);
     expect(divide(7, 2)).toBeCloseTo(3.5);
+  });
+
+  test('modulo: 10 % 3 = 1', () => {
+    expect(modulo(10, 3)).toBe(1);
+  });
+
+  test('power: 2^8 = 256', () => {
+    expect(power(2, 8)).toBe(256);
+  });
+
+  test('square root: 9 -> 3 and negative throws', () => {
+    expect(squareRoot(9)).toBe(3);
+    expect(() => squareRoot(-1)).toThrow(/negative/i);
   });
 });
