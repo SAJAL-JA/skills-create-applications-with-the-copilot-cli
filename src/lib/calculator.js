@@ -29,4 +29,19 @@ function divide(a, b) {
   return a / b;
 }
 
-module.exports = { add, subtract, multiply, divide };
+function modulo(a, b) {
+  return a % b;
+}
+
+function potencia(base, exponente) {
+  return Math.pow(base, exponente);
+}
+
+function raizCuadrada(n) {
+  if (n < 0) {
+    throw new Error('cannot take square root of negative number');
+  }
+  return Math.sqrt(n);
+}
+
+module.exports = { add, subtract, multiply, divide, modulo, potencia, raizCuadrada };
