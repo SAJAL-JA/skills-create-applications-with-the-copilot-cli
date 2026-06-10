@@ -18,6 +18,7 @@
  */
 
 const args = process.argv.slice(2);
+const { add, subtract, multiply, divide } = require('./lib/calculator');
 
 function printUsageAndExit(code = 1) {
   console.error('Usage: node src/calculator.js <op> <a> <b>');
@@ -121,26 +122,32 @@ if (!Number.isFinite(a) || !Number.isFinite(b)) {
 }
 
 let result;
-switch (opName) {
-  case 'add':
-    result = a + b;
-    break;
-  case 'subtract':
-    result = a - b;
-    break;
-  case 'multiply':
-    result = a * b;
-    break;
-  case 'divide':
-    if (b === 0) {
-      console.error('Error: division by zero');
-      process.exit(3);
-    }
-    result = a / b;
-    break;
-  default:
-    console.error('Internal error: unknown operation');
-    process.exit(4);
+try {
+  switch (opName) {
+    case 'add':
+      result = add(a, b);
+      break;
+    case 'subtract':
+      result = subtract(a, b);
+      break;
+    case 'multiply':
+      result = multiply(a, b);
+      break;
+    case 'divide':
+      result = divide(a, b);
+      break;
+    default:
+      console.error('Internal error: unknown operation');
+      process.exit(4);
+  }
+} catch (err) {
+  // Map library errors to CLI exit codes
+  if (err && String(err.message).toLowerCase().includes('division by zero')) {
+    console.error('Error: division by zero');
+    process.exit(3);
+  }
+  console.error('Internal error:', err && err.message ? err.message : err);
+  process.exit(4);
 }
 
 // Print only the result to stdout for scriptability
